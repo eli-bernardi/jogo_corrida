@@ -8,46 +8,53 @@ class Obj {
     }
     des_quad() {
         des.fillStyle = this.a
-        des.fillRect(this.x, this.y, this.w, this.h)
+        des.fillRect(this.x, this.y, this.w, this.h, this.a)
     }
 }
 
 class Carro extends Obj {
+    des_carro() {
+        let img = new Image()
+        img.src = this.a
+        des.drawImage(img, this.x, this.y, this.w, this.h)
+    }
+
     dir = 0
+    pos = 0
+    vida = 5
+    pontos = 0
 
     mov_car() {
         this.y += this.dir
-
-        // Limites para não sair da tela
-        if (this.y < 50) this.y = 50
-        if (this.y > 650) this.y = 650
+        this.x += this.pos
     }
 
     des_carro_old() {
+
         // Roda dianteira esquerda (frente superior)
         des.beginPath()
         des.lineWidth = '5'
         des.strokeStyle = 'black'
         des.fillStyle = 'white'
-        des.rect(this.x + 55, this.y - 48, 10, 10)
+        des.rect(this.x + 55, this.y - 48, 10, 10)  // Ajustado para alinhar com a frente
         des.stroke()
         des.fill()
 
         // Roda dianteira direita (frente inferior)
         des.beginPath()
-        des.rect(this.x + 55, this.y - 8, 10, 10)
+        des.rect(this.x + 55, this.y - 8, 10, 10)   // Ajustado para alinhar com a frente
         des.stroke()
         des.fill()
 
         // Roda traseira esquerda (trás superior)
         des.beginPath()
-        des.rect(this.x + 5, this.y - 52, 10, 10)
+        des.rect(this.x + 5, this.y - 52, 10, 10)   // Ajustado para alinhar com a traseira
         des.stroke()
         des.fill()
 
         // Roda traseira direita (trás inferior)
         des.beginPath()
-        des.rect(this.x + 5, this.y - 8, 10, 10)
+        des.rect(this.x + 5, this.y - 8, 10, 10)    // Ajustado para alinhar com a traseira
         des.stroke()
         des.fill()
 
@@ -76,38 +83,63 @@ class Carro extends Obj {
         des.stroke()
         des.fill()
     }
+    colid(objeto) {
+        if ((this.x < objeto.x + objeto.w) &&
+            (this.x + this.w > objeto.x) &&
+            (this.y < objeto.y + objeto.h) &&
+            (this.y + this.h > objeto.y)) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    point(objeto) {
+        if (objeto.x <= -100) {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 class CarroInimigo extends Obj {
-    mov_car(velocidade) {
-        this.x -= velocidade
+    recomeca() {
+        this.x = 1300
+        this.y = Math.floor(Math.random() * (638 - 62) + 62)
     }
 
+    mov_car() {
+        this.x -= 6
+        if (this.x < -100) {
+            this.recomeca()
+        }
+    }
     des_carro_old() {
         // Roda dianteira esquerda (frente superior)
         des.beginPath()
         des.lineWidth = '5'
-        des.strokeStyle = 'black'
+        des.strokeStyle = 'dark'
         des.fillStyle = 'white'
-        des.rect(this.x + 55, this.y - 48, 10, 10)
+        des.rect(this.x + 55, this.y - 48, 10, 10)  // Ajustado para alinhar com a frente
         des.stroke()
         des.fill()
 
         // Roda dianteira direita (frente inferior)
         des.beginPath()
-        des.rect(this.x + 55, this.y - 8, 10, 10)
+        des.rect(this.x + 55, this.y - 8, 10, 10)   // Ajustado para alinhar com a frente
         des.stroke()
         des.fill()
 
         // Roda traseira esquerda (trás superior)
         des.beginPath()
-        des.rect(this.x + 5, this.y - 52, 10, 10)
+        des.rect(this.x + 5, this.y - 52, 10, 10)   // Ajustado para alinhar com a traseira
         des.stroke()
         des.fill()
 
         // Roda traseira direita (trás inferior)
         des.beginPath()
-        des.rect(this.x + 5, this.y - 8, 10, 10)
+        des.rect(this.x + 5, this.y - 8, 10, 10)    // Ajustado para alinhar com a traseira
         des.stroke()
         des.fill()
 
@@ -139,8 +171,8 @@ class CarroInimigo extends Obj {
 }
 
 class Estrada extends Obj {
-    mov_est(velocidade) {
-        this.x -= velocidade
+    mov_est() {
+        this.x -= 3
         if (this.x < -30) {
             this.x = 1500
         }
