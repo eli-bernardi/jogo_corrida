@@ -13,7 +13,7 @@ class Obj {
 }
 
 class Carro extends Obj {
-    des_carro() {
+    des_carro_old() {
         let img = new Image()
         img.src = this.a
         des.drawImage(img, this.x, this.y, this.w, this.h)
@@ -105,7 +105,7 @@ class Carro extends Obj {
 
 class CarroInimigo extends Obj {
     recomeca() {
-        this.x = 1300
+        this.x = 2000
         this.y = Math.floor(Math.random() * (638 - 62) + 62)
     }
 
@@ -174,7 +174,7 @@ class Estrada extends Obj {
     mov_est() {
         this.x -= 3
         if (this.x < -30) {
-            this.x = 1500
+            this.x = 2000
         }
     }
 }
